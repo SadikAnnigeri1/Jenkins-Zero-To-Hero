@@ -6,7 +6,7 @@ pipeline {
         docker { image 'maven:3.8.1-adoptopenjdk-11' }
       }
       steps {
-        sh 'mvn --install'
+        sh 'mvn --version'
       }
     }
     stage('Front-end') {
@@ -14,8 +14,17 @@ pipeline {
         docker { image 'node:16-alpine' }
       }
       steps {
-        sh 'node --install'
+        sh 'node --version'
       }
+ stage('Python Environment') {
+    agent {
+        docker { image 'python:3.9-alpine' }
+    }
+    steps {
+        sh 'python --version'  // Check Python version
+        sh 'pip install -r requirements.txt'  // Install dependencies (if you have a requirements.txt)
+          }
+       }
     }
   }
 }
